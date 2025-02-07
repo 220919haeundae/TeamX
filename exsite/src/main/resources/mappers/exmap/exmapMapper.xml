@@ -7,8 +7,8 @@
 <mapper namespace="com.teamx.exsite.model.mapper.exmap.ExmapMapper">
     <select id="selectAllExmapCoordinates" resultType="ExmapCoordinate">
         SELECT DISTINCT LOT, LAT 
-        FROM EX_MAP WHERE 
-        GUNAME = #{guname}
+        FROM EX_MAP JOIN EXHIBITION USING (EXHIBITION_NO)
+        WHERE GUNAME = #{guname} AND TO_DATE(SUBSTR(EX_DATE, 12, 20), 'YY-MM-DD') >= SYSDATE
     </select>
     
     <select id="selectDistinctGuname" resultType="string">
@@ -18,12 +18,12 @@
 	</select>
 	
     <select id="findRecentExhibitionByCoordinates" resultType="ExmapExhibition">
-		select * from (SELECT e.EXHIBITION_NO, e.TITLE, e.PLACE, e.EX_DATE, e.MAIN_IMG
+		select * from (SELECT e.EXHIBITION_NO, e.TITLE, e.PLACE, e.EX_DATE, e.MAIN_IMG, em.LOT, em.LAT
 	    FROM EX_MAP em
 	    JOIN EXHIBITION e ON em.EXHIBITION_NO = e.EXHIBITION_NO
 	    WHERE em.LAT = #{lot} AND em.LOT = #{lat}
 	    ORDER BY e.EX_DATE DESC)
-	    where rownum = 1
+	    where rownum = 1 AND TO_DATE(SUBSTR(EX_DATE, 12, 20), 'YYYY-MM-DD') >= SYSDATE
     </select>
 	
 </mapper>

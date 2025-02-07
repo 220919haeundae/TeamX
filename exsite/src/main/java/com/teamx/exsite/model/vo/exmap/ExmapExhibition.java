@@ -9,4 +9,6 @@ public class ExmapExhibition {
     private String place;
     private String exDate;
     private String mainImg;
+    private String lat;
+    private String lot;
 }

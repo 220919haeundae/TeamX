@@ -56,7 +56,7 @@ public class ReviewController {
 		if(loginUser == null) {
 			return "login/loginForm";
 		}
-		// 예마한 전시 중 관람일이 지난 것들
+		// 예매한 전시 중 관람일이 지난 것들
 		List<ReviewDTO> viewedContent = reviewService.selelectViewedContent(loginUser.getUserNo());
 		//작성한 리뷰들
 		List<ReviewDTO> writedReview = reviewService.selectWritedReviewList(loginUser.getUserNo());
